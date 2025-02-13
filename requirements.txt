@@ -1,8 +1,7 @@
-numpy
-pandas
-tensorflow
-keras
+numpy==1.23.5
+pandas==1.4.0
+tensorflow==2.10.0
 imageio
-matplotlib
-scikit-image
-scikit-learn
+matplotlib==3.5.0
+scikit-image==0.19.3
+scikit-learn==1.0.2
