@@ -11,6 +11,10 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "scripts"))
 from scripts.unet_model import unet_model
 from scripts.attention_unet_model import attention_unet_model
 from scripts.resunet_model import resunet_model
+from scripts.config import IMG_HEIGHT, IMG_WIDTH
+
+import tensorflow as tf
+print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
 
 
 project_dir = os.path.dirname(os.path.abspath(__file__))
@@ -23,8 +27,8 @@ mask_dir = os.path.join(project_dir, "masks")
 image_files = sorted([f for f in os.listdir(image_dir) if f.endswith(".tif")])
 mask_files = sorted([f for f in os.listdir(mask_dir) if f.endswith(".tif")])
 
-# Image size
-IMG_HEIGHT, IMG_WIDTH = 256, 256
+# Image size controlled in scripts/config.py
+#IMG_HEIGHT, IMG_WIDTH = 512, 512
 
 # Load and preprocess images
 X = np.array([resize(iio.imread(os.path.join(image_dir, f)), (IMG_HEIGHT, IMG_WIDTH)) for f in image_files])
@@ -38,9 +42,9 @@ Y = np.expand_dims(Y, axis=-1)
 X_train, X_val, Y_train, Y_val = train_test_split(X, Y, test_size=0.2, random_state=42)
 
 # Load model
-#model = unet_model()
+model = unet_model()
 #model = attention_unet_model()
-model = resunet_model()
+#model = resunet_model()
 
 # Train model
 model.fit(X_train, Y_train, validation_data=(X_val, Y_val), batch_size=8, epochs=4)

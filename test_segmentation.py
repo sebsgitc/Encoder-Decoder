@@ -17,7 +17,7 @@ test_image_name = sorted(os.listdir(image_dir))[0]  # Choose the first image
 test_image_path = os.path.join(image_dir, test_image_name)
 
 # Load and preprocess the test image
-IMG_HEIGHT, IMG_WIDTH = 256, 256
+IMG_HEIGHT, IMG_WIDTH = 2560, 2560
 test_image = iio.imread(test_image_path)
 test_image_resized = resize(test_image, (IMG_HEIGHT, IMG_WIDTH))
 
