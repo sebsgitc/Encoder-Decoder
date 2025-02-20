@@ -2,6 +2,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
+from load_data import load_images, IMAGE_SIZE
 from load_data import load_images
 
 #circ shit
@@ -11,12 +12,12 @@ from remove_circles import remove_circles
 #MODEL_PATH = "models/resunet_model.h5"
 #MODEL_PATH = "models/unet_model.h5"
 #MODEL_PATH = "models/fpn_model.h5"
-Model_PATH = "models/attention_unet_model.h5"
-
+#MODEL_PATH = "models/attention_unet_model.h5"
+MODEL_PATH = "models/attention_resunet_model.h5"
 
 #TEST_IMAGE_DIR = "data/raw"
-TEST_IMAGE_DIR = "data/Excel cells"
-
+#TEST_IMAGE_DIR = "data/Excel cells"
+TEST_IMAGE_DIR = "images/r01_/rec_16bit_Paganin_0"
 
 OUTPUT_DIR = "output/"
 
@@ -64,6 +65,7 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # Visualize & Save results
 def visualize_results(original, predicted, save_path="output/"):
+    j=0
     for i in range(len(original)):
         fig, axes = plt.subplots(1, 2, figsize=(8, 4))
 
@@ -82,6 +84,9 @@ def visualize_results(original, predicted, save_path="output/"):
         plt.savefig(output_file)
         plt.close()
         print(f"Saved: {output_file}")
+        j +=1
+        if j == 10:
+            break
 
 visualize_results(test_images, predictions)
 print("Segmentation results saved in 'output/' folder.")
