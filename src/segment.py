@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 from load_data import load_images
 
+#circ shit
+from remove_circles import remove_circles
+
 # Paths
 #MODEL_PATH = "models/resunet_model.h5"
 #MODEL_PATH = "models/unet_model.h5"
@@ -13,6 +16,8 @@ Model_PATH = "models/attention_unet_model.h5"
 
 #TEST_IMAGE_DIR = "data/raw"
 TEST_IMAGE_DIR = "data/Excel cells"
+
+
 OUTPUT_DIR = "output/"
 
 # Load trained model
@@ -41,6 +46,8 @@ print(f"Loaded model from {MODEL_PATH}")
 
 # Load test images
 test_images, _ = load_images(TEST_IMAGE_DIR, color_mode="rgb")  # Ignore masks
+#circ sh
+test_images = np.array([remove_circles(img) for img in test_images])
 
 # Run predictions
 print("Running predictions...")
