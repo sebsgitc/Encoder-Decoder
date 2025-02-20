@@ -2,6 +2,7 @@ import tensorflow as tf
 from tensorflow.keras.layers import Input, Conv2D, MaxPooling2D, UpSampling2D, concatenate
 from tensorflow.keras.models  import Model
 from config import IMG_HEIGHT, IMG_WIDTH
+
                     
 def unet_model(input_size=(IMG_HEIGHT, IMG_WIDTH, 1)):
     inputs = Input(input_size)

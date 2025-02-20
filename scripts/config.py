@@ -8,5 +8,8 @@ IMAGE_DIR = os.path.join(PROJECT_DIR, "images")
 MASK_DIR = os.path.join(PROJECT_DIR, "masks")
 
 # Image size
-IMG_HEIGHT = 512
-IMG_WIDTH = 512
+IMG_HEIGHT = 1024
+IMG_WIDTH = 1024
+
+#Minibatch size
+MB_SIZE = 2

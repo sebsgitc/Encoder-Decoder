@@ -1,6 +1,9 @@
 import tensorflow as tf
 from tensorflow.keras.layers import Input, Conv2D, MaxPooling2D, UpSampling2D, concatenate, Activation, Add, Multiply
 from tensorflow.keras.models import Model
+from config import IMG_HEIGHT, IMG_WIDTH
+
+
 
 # Attention Gate
 def attention_block(skip_input, gating_input, filters):
@@ -19,7 +22,7 @@ def attention_block(skip_input, gating_input, filters):
 
 
 # Attention U-Net 
-def attention_unet_model(input_size=(256, 256, 1)):
+def attention_unet_model(input_size=(IMG_HEIGHT, IMG_WIDTH, 1)):
     inputs = Input(input_size)
 
     # Encoder

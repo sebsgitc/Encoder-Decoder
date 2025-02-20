@@ -11,10 +11,16 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "scripts"))
 from scripts.unet_model import unet_model
 from scripts.attention_unet_model import attention_unet_model
 from scripts.resunet_model import resunet_model
-from scripts.config import IMG_HEIGHT, IMG_WIDTH
+from scripts.config import IMG_HEIGHT, IMG_WIDTH, MB_SIZE
 
 import tensorflow as tf
+tf.keras.backend.clear_session()
+
 print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
+print(tf.config.list_physical_devices('GPU'))
+print(tf.sysconfig.get_build_info())
+
+
 
 
 project_dir = os.path.dirname(os.path.abspath(__file__))
@@ -42,14 +48,20 @@ Y = np.expand_dims(Y, axis=-1)
 X_train, X_val, Y_train, Y_val = train_test_split(X, Y, test_size=0.2, random_state=42)
 
 # Load model
-model = unet_model()
-#model = attention_unet_model()
-#model = resunet_model()
+model_u = unet_model()
+#model_au = attention_unet_model()
+#model_resu = resunet_model()
 
 # Train model
-model.fit(X_train, Y_train, validation_data=(X_val, Y_val), batch_size=8, epochs=4)
+model_u.fit(X_train, Y_train, validation_data=(X_val, Y_val), batch_size=MB_SIZE, epochs=4)
+#model_au.fit(X_train, Y_train, validation_data=(X_val, Y_val), batch_size=MB_SIZE, epochs=4)
+#model_resu.fit(X_train, Y_train, validation_data=(X_val, Y_val), batch_size=MB_SIZE, epochs=4)
+
 
 # Save model
-model.save("models/unet_segmentation.h5")
+model_u.save("models/unet_segmentation.keras")
+#model_au.save("models/attention_unet_segmentation.keras")
+#model_resu.save("models/resunet_segmentation.keras")
 
-print("Training Complete. Model saved in 'models/unet_segmentation.h5'")
+
+print("Training Complete. Models saved in 'models/'")

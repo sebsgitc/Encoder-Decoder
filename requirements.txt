@@ -1,7 +1,7 @@
+tensorflow[and-cuda]
 numpy
 scipy
 pandas
-tensorflow[and-cuda]
 imageio
 matplotlib
 scikit-image

@@ -1,6 +1,9 @@
 import tensorflow as tf
 from tensorflow.keras.layers import (Input, Conv2D, MaxPooling2D, UpSampling2D,BatchNormalization, Activation, Add, concatenate)
 from tensorflow.keras.models import Model
+from config import IMG_HEIGHT, IMG_WIDTH
+
+
 
 
 def residual_block(inputs, filters):
@@ -17,7 +20,7 @@ def residual_block(inputs, filters):
     x = Activation('relu')(x)
     return x
 
-def resunet_model(input_size=(256, 256, 1)):
+def resunet_model(input_size=(IMG_HEIGHT, IMG_WIDTH, 1)):
     inputs = Input(input_size)
 
     # Encoder
