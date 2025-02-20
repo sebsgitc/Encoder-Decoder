@@ -5,6 +5,9 @@ from tensorflow.keras.optimizers import Adam
 from attention_resunet import attention_resunet  # Import Attention-ResUNet
 from load_data import load_images, IMAGE_SIZE, IMG_HEIGHT, IMG_WIDTH  # Ensure this loads images correctly
 
+
+#removing circles
+from remove_circles import remove_circles
 # Define Focal Loss BEFORE using it
 import tensorflow.keras.backend as K
 
@@ -23,6 +26,10 @@ MODEL_PATH = "models/attention_resunet_model.h5"
 
 # Load images & masks
 images, masks = load_images(IMAGE_DIR, color_mode="rgb")
+
+#circle shit
+images = np.array([remove_circles(img) for img in images])
+
 
 # Train-test split
 split = int(len(images) * 0.8)

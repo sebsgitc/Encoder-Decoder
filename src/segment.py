@@ -3,6 +3,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 from load_data import load_images, IMAGE_SIZE
+from load_data import load_images
+
+#circ shit
+from remove_circles import remove_circles
 
 # Paths
 #MODEL_PATH = "models/resunet_model.h5"
@@ -43,6 +47,8 @@ print(f"Loaded model from {MODEL_PATH}")
 
 # Load test images
 test_images, _ = load_images(TEST_IMAGE_DIR, color_mode="rgb")  # Ignore masks
+#circ sh
+test_images = np.array([remove_circles(img) for img in test_images])
 
 # Run predictions
 print("Running predictions...")
