@@ -3,7 +3,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.optimizers import Adam
 from attention_resunet import attention_resunet  # Import Attention-ResUNet
-from load_data import load_images  # Ensure this loads images correctly
+from load_data import load_images, IMAGE_SIZE, IMG_HEIGHT, IMG_WIDTH  # Ensure this loads images correctly
 
 # Define Focal Loss BEFORE using it
 import tensorflow.keras.backend as K
@@ -17,7 +17,8 @@ def focal_loss(y_true, y_pred, gamma=2.0, alpha=0.25):
     return loss
 
 # Paths
-IMAGE_DIR = "data/Excel cells"
+#IMAGE_DIR = "data/Excel cells"
+IMAGE_DIR = "images/r01_/rec_16bit_Paganin_0"
 MODEL_PATH = "models/attention_resunet_model.h5"
 
 # Load images & masks
@@ -32,11 +33,11 @@ print(f"X_train shape: {X_train.shape}, Y_train shape: {Y_train.shape}")
 print(f"Sample min/max values - X_train: {X_train.min()} to {X_train.max()}, Y_train: {Y_train.min()} to {Y_train.max()}")
 
 # Create & compile Attention ResUNet Model
-model = attention_resunet(input_shape=(256, 256, 3))
+model = attention_resunet(input_shape=(IMG_HEIGHT, IMG_WIDTH, 3))
 model.compile(optimizer=Adam(learning_rate=1e-4), loss=focal_loss, metrics=["accuracy"])
 
 # Train Model
-model.fit(X_train, Y_train, validation_data=(X_val, Y_val), batch_size=6, epochs=50)
+model.fit(X_train, Y_train, validation_data=(X_val, Y_val), batch_size=6, epochs=5)
 
 # Save Model
 model.save(MODEL_PATH, save_format="h5")

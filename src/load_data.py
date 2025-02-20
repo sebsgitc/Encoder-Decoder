@@ -4,8 +4,9 @@ import numpy as np
 import cv2  # Added for edge detection
 import skimage
 #skimage.rgb2gray(images)
-
-IMAGE_SIZE = (256, 256)
+IMG_HEIGHT = 512
+IMG_WIDTH = 512
+IMAGE_SIZE = (IMG_HEIGHT, IMG_WIDTH)
 
 def create_border_masks(images):
     """Creates binary masks highlighting only the white borders."""
