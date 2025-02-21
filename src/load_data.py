@@ -7,6 +7,8 @@ import skimage
 IMG_HEIGHT = 512
 IMG_WIDTH = 512
 IMAGE_SIZE = (IMG_HEIGHT, IMG_WIDTH)
+NUM_EPOCHS = 5
+NUM_BATCHSIZE = 6
 
 def create_border_masks(images):
     """Creates binary masks highlighting only the white borders."""
