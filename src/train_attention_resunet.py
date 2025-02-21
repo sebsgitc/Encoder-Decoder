@@ -2,12 +2,14 @@ import os
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.optimizers import Adam
+from skimage import data
+from skimage.color import rgb2gray
 from attention_resunet import attention_resunet  # Import Attention-ResUNet
-from load_data import load_images, IMAGE_SIZE, IMG_HEIGHT, IMG_WIDTH  # Ensure this loads images correctly
+from load_data import load_images, IMAGE_SIZE, IMG_HEIGHT, IMG_WIDTH, NUM_EPOCHS, NUM_BATCHSIZE  # Ensure this loads images correctly
 
 
 #removing circles
-from remove_circles import remove_circles
+#from remove_circles import remove_circles
 # Define Focal Loss BEFORE using it
 import tensorflow.keras.backend as K
 
@@ -26,9 +28,9 @@ MODEL_PATH = "models/attention_resunet_model.h5"
 
 # Load images & masks
 images, masks = load_images(IMAGE_DIR, color_mode="rgb")
-
+#images = rgb2gray(images)
 #circle shit
-images = np.array([remove_circles(img) for img in images])
+#images = np.array([remove_circles(img) for img in images])
 
 
 # Train-test split
@@ -44,7 +46,7 @@ model = attention_resunet(input_shape=(IMG_HEIGHT, IMG_WIDTH, 3))
 model.compile(optimizer=Adam(learning_rate=1e-4), loss=focal_loss, metrics=["accuracy"])
 
 # Train Model
-model.fit(X_train, Y_train, validation_data=(X_val, Y_val), batch_size=6, epochs=5)
+model.fit(X_train, Y_train, validation_data=(X_val, Y_val), batch_size=NUM_BATCHSIZE, epochs=NUM_EPOCHS)
 
 # Save Model
 model.save(MODEL_PATH, save_format="h5")
