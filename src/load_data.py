@@ -33,9 +33,18 @@ def load_images(image_folder, color_mode="rgb"):
         img_path = os.path.join(image_folder, filename)
 
         try:
-            img = load_img(img_path, target_size=IMAGE_SIZE, color_mode=color_mode)  
-            img = img_to_array(img) / 255.0  # Normalize to 0-1
+            #img = load_img(img_path, target_size=IMAGE_SIZE, color_mode=color_mode)  
+            #img = img_to_array(img) / 255.0  # Normalize to 0-1
             #img = img_to_array(img).astype(np.float32) / 65535.0  # Normalize correctly for 16-bit
+            img = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)
+            
+            #testing colour mod.
+            if len(img.shape) == 3:  # If mistakenly loaded as multi-channel
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+            img = img.astype(np.float32) / 65535.0  # Correct 16-bit normalization
+            images.append(np.expand_dims(img, axis=-1))
+            
             images.append(img)
         except Exception as e:
             print(f"Error loading {filename}: {e}")
