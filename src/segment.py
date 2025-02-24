@@ -8,7 +8,7 @@ from load_data import load_images, IMAGE_SIZE
 #from remove_circles import remove_circles
 
 # Paths
-USED_MODEL = "attention_unet"
+USED_MODEL = "attention_resunet"
 #MODEL_PATH = "models/resunet_model.h5"
 #MODEL_PATH = "models/unet_model.h5"
 #MODEL_PATH = "models/fpn_model.h5"
@@ -58,8 +58,10 @@ predictions = model.predict(test_images)
 # Ensure output is in correct range
 #predictions = np.clip(predictions, 0, 1)
 # Convert predictions to binary mask (Thresholding)
-threshold = 0.2 
-predictions = (predictions > threshold).astype(np.float32)
+#threshold = 0.2 
+#predictions = (predictions > threshold).astype(np.float32)
+predictions = np.clip(predictions, 0, 1)  # Keeps grayscale range
+
 
 # Create output folder
 os.makedirs(OUTPUT_DIR, exist_ok=True)

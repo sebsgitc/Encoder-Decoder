@@ -7,7 +7,7 @@ import skimage
 IMG_HEIGHT = 512
 IMG_WIDTH = 512
 IMAGE_SIZE = (IMG_HEIGHT, IMG_WIDTH)
-NUM_EPOCHS = 5
+NUM_EPOCHS = 2
 NUM_BATCHSIZE = 6
 
 def create_border_masks(images):
@@ -35,6 +35,7 @@ def load_images(image_folder, color_mode="rgb"):
         try:
             img = load_img(img_path, target_size=IMAGE_SIZE, color_mode=color_mode)  
             img = img_to_array(img) / 255.0  # Normalize to 0-1
+            #img = img_to_array(img).astype(np.float32) / 65535.0  # Normalize correctly for 16-bit
             images.append(img)
         except Exception as e:
             print(f"Error loading {filename}: {e}")
