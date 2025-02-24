@@ -47,7 +47,9 @@ model = tf.keras.models.load_model(MODEL_PATH, custom_objects={"focal_loss": foc
 print(f"Loaded model from {MODEL_PATH}")
 
 # Load test images
-test_images, _ = load_images(TEST_IMAGE_DIR, color_mode="rgb")  # Ignore masks
+#test_images, _ = load_images(TEST_IMAGE_DIR, color_mode="rgb")  # Ignore masks
+test_images, _ = load_images(TEST_IMAGE_DIR, color_mode="grayscale")
+
 #circ sh
 #test_images = np.array([remove_circles(img) for img in test_images])
 
@@ -73,12 +75,14 @@ def visualize_results(original, predicted, save_path=OUTPUT_DIR):
         fig, axes = plt.subplots(1, 2, figsize=(8, 4))
 
         # Original Image
-        axes[0].imshow(original[i])
+        #axes[0].imshow(original[i])
+        axes[0].imshow(original[i].squeeze(), cmap="gray", vmin=0, vmax=1)
         axes[0].set_title("Original Image")
         axes[0].axis("off")
 
         # Predicted Segmentation
-        axes[1].imshow(predicted[i])
+        #axes[1].imshow(predicted[i])
+        axes[1].imshow(predicted[i].squeeze(), cmap="gray", vmin=0, vmax=1)
         axes[1].set_title("Predicted Segmentation")
         axes[1].axis("off")
 
