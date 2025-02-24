@@ -28,6 +28,8 @@ MODEL_PATH = "models/attention_resunet_model.h5"
 
 # Load images & masks
 images, masks = load_images(IMAGE_DIR, color_mode="rgb")
+print("Image dtype:", images.dtype, "Min/Max:", images.min(), images.max())
+
 #images = rgb2gray(images)
 #circle shit
 #images = np.array([remove_circles(img) for img in images])

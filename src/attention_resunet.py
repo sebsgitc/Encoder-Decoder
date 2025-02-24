@@ -1,6 +1,7 @@
 import tensorflow as tf
 from tensorflow.keras.layers import Input, Conv2D, BatchNormalization, Activation, MaxPooling2D, Conv2DTranspose, concatenate, Add, Multiply
 from tensorflow.keras.models import Model
+from load_data import IMG_HEIGHT, IMG_WIDTH
 
 def res_block(x, filters):
     """Residual block with two convolutional layers and a shortcut connection."""
@@ -30,7 +31,7 @@ def attention_block(x, g, filters):
     psi = Conv2D(1, (1, 1), padding='same', activation='sigmoid')(act_xg)
     return Multiply()([x, psi])
 
-def attention_resunet(input_shape=(256, 256, 3)):
+def attention_resunet(input_shape=(IMG_HEIGHT, IMG_WIDTH, 3)):
     """Attention ResUNet model for border segmentation."""
     inputs = Input(shape=input_shape)
 
