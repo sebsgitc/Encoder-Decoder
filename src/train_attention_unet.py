@@ -3,7 +3,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.models import Model
-from load_data import load_images  # Ensure this correctly loads images & masks
+from load_data import load_images, IMAGE_SIZE, IMG_HEIGHT, IMG_WIDTH, NUM_EPOCHS, NUM_BATCHSIZE  # Ensure this loads images correctly
 from attention_unet import attention_unet  # Import the new model
 
 # Define Focal Loss BEFORE using it
@@ -16,7 +16,8 @@ def focal_loss(y_true, y_pred, gamma=2.0, alpha=0.25):
     return loss
 
 # Paths
-IMAGE_DIR = "data/Excel cells"
+#IMAGE_DIR = "data/Excel cells"
+IMAGE_DIR = "images/r01_/rec_16bit_Paganin_0"
 MODEL_PATH = "models/attention_unet_model.h5"
 
 # Load images & masks
@@ -31,11 +32,11 @@ print(f"X_train shape: {X_train.shape}, Y_train shape: {Y_train.shape}")
 print(f"Sample min/max values - X_train: {X_train.min()} to {X_train.max()}, Y_train: {Y_train.min()} to {Y_train.max()}")
 
 # Create and Compile Attention U-Net Model
-model = attention_unet(input_shape=(256, 256, 3))
+model = attention_unet(input_shape=(IMG_HEIGHT, IMG_WIDTH, 3))
 model.compile(optimizer=Adam(learning_rate=1e-3), loss=focal_loss, metrics=["accuracy"])
 
 # Train Model
-model.fit(X_train, Y_train, validation_data=(X_val, Y_val), batch_size=8, epochs=20)
+model.fit(X_train, Y_train, validation_data=(X_val, Y_val), batch_size=NUM_BATCHSIZE, epochs=NUM_EPOCHS)
 
 # Save Model
 model.save(MODEL_PATH, save_format="h5")

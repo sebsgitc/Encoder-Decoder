@@ -1,5 +1,6 @@
 import tensorflow as tf
 from tensorflow.keras import layers, Model
+from load_data import IMG_HEIGHT, IMG_WIDTH
 
 def attention_block(x, g, inter_channel):
     """Attention Gate for U-Net"""
@@ -10,7 +11,7 @@ def attention_block(x, g, inter_channel):
     psi = layers.Conv2D(1, (1, 1), strides=(1, 1), padding='same', activation='sigmoid')(act_xg)
     return layers.Multiply()([x, psi])
 
-def attention_unet(input_shape=(256, 256, 1)):
+def attention_unet(input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)):
     """Attention U-Net for segmentation."""
     inputs = layers.Input(shape=input_shape)
 

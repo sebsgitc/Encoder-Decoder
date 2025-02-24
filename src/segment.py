@@ -3,23 +3,24 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 from load_data import load_images, IMAGE_SIZE
-from load_data import load_images
 
 #circ shit
-from remove_circles import remove_circles
+#from remove_circles import remove_circles
 
 # Paths
+USED_MODEL = "attention_resunet"
 #MODEL_PATH = "models/resunet_model.h5"
 #MODEL_PATH = "models/unet_model.h5"
 #MODEL_PATH = "models/fpn_model.h5"
 #MODEL_PATH = "models/attention_unet_model.h5"
-MODEL_PATH = "models/attention_resunet_model.h5"
+#MODEL_PATH = "models/attention_resunet_model.h5"
+MODEL_PATH = "models/" + USED_MODEL + "_model.h5"
 
 #TEST_IMAGE_DIR = "data/raw"
 #TEST_IMAGE_DIR = "data/Excel cells"
 TEST_IMAGE_DIR = "images/r01_/rec_16bit_Paganin_0"
 
-OUTPUT_DIR = "output/"
+OUTPUT_DIR = "output/" + USED_MODEL + "/"
 
 # Load trained model
 if not os.path.exists(MODEL_PATH):
@@ -48,7 +49,7 @@ print(f"Loaded model from {MODEL_PATH}")
 # Load test images
 test_images, _ = load_images(TEST_IMAGE_DIR, color_mode="rgb")  # Ignore masks
 #circ sh
-test_images = np.array([remove_circles(img) for img in test_images])
+#test_images = np.array([remove_circles(img) for img in test_images])
 
 # Run predictions
 print("Running predictions...")
@@ -57,14 +58,16 @@ predictions = model.predict(test_images)
 # Ensure output is in correct range
 #predictions = np.clip(predictions, 0, 1)
 # Convert predictions to binary mask (Thresholding)
-threshold = 0.2 
-predictions = (predictions > threshold).astype(np.float32)
+#threshold = 0.2 
+#predictions = (predictions > threshold).astype(np.float32)
+predictions = np.clip(predictions, 0, 1)  # Keeps grayscale range
+
 
 # Create output folder
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # Visualize & Save results
-def visualize_results(original, predicted, save_path="output/"):
+def visualize_results(original, predicted, save_path=OUTPUT_DIR):
     j=0
     for i in range(len(original)):
         fig, axes = plt.subplots(1, 2, figsize=(8, 4))
@@ -89,4 +92,4 @@ def visualize_results(original, predicted, save_path="output/"):
             break
 
 visualize_results(test_images, predictions)
-print("Segmentation results saved in 'output/' folder.")
+print("Segmentation results saved in 'output/" + USED_MODEL + "/' folder.")
