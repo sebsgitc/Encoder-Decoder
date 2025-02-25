@@ -1,7 +1,11 @@
 import tensorflow as tf
 from tensorflow.keras.layers import Input, Conv2D, BatchNormalization, Activation, MaxPooling2D, Conv2DTranspose, concatenate, Add, Multiply
 from tensorflow.keras.models import Model
-from load_data import IMG_HEIGHT, IMG_WIDTH
+from load_data import IMG_HEIGHT, IMG_WIDTH, NUM_CLASSES
+
+# Maybe try these two lines below to save memory
+#from tensorflow.keras import mixed_precision
+#mixed_precision.set_global_policy("mixed_float16")
 
 def res_block(x, filters):
     """Residual block with two convolutional layers and a shortcut connection."""
@@ -31,7 +35,7 @@ def attention_block(x, g, filters):
     psi = Conv2D(1, (1, 1), padding='same', activation='sigmoid')(act_xg)
     return Multiply()([x, psi])
 
-def attention_resunet(input_shape=(IMG_HEIGHT, IMG_WIDTH, 3)):
+def attention_resunet(input_shape=(IMG_HEIGHT, IMG_WIDTH, 1)):
     """Attention ResUNet model for border segmentation."""
     inputs = Input(shape=input_shape)
 
@@ -64,6 +68,8 @@ def attention_resunet(input_shape=(IMG_HEIGHT, IMG_WIDTH, 3)):
     u7 = res_block(u7, 32)
 
     outputs = Conv2D(1, (1, 1), activation='sigmoid')(u7)
+    # Maybe work inthe row below to save memory
+    #outputs = tf.keras.layers.Activation("softmax", dtype="float32")(outputs)
 
     model = Model(inputs=[inputs], outputs=[outputs])
     return model

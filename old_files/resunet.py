@@ -1,0 +1,56 @@
+import tensorflow as tf
+from tensorflow.keras.layers import Input, Conv2D, BatchNormalization, Activation, MaxPooling2D, Conv2DTranspose, concatenate, Add
+from tensorflow.keras.models import Model
+
+def res_block(x, filters):
+    """Residual block with two convolutional layers and a shortcut connection."""
+    shortcut = x  # Store input as shortcut
+
+    # If the input channel does not match filters, apply a 1x1 convolution to match shape
+    if x.shape[-1] != filters:
+        shortcut = Conv2D(filters, (1, 1), padding="same")(shortcut)
+
+    x = Conv2D(filters, (3, 3), padding='same')(x)
+    x = BatchNormalization()(x)
+    x = Activation('relu')(x)
+    x = Conv2D(filters, (3, 3), padding='same')(x)
+    x = BatchNormalization()(x)
+
+    # Add shortcut connection
+    x = Add()([shortcut, x])
+    x = Activation('relu')(x)
+    return x
+
+def resunet(input_shape=(256, 256, 3)):
+    """ResUNet architecture for border segmentation."""
+    inputs = Input(shape=input_shape)
+
+    # Encoder
+    c1 = res_block(inputs, 32)
+    p1 = MaxPooling2D((2, 2))(c1)
+
+    c2 = res_block(p1, 64)
+    p2 = MaxPooling2D((2, 2))(c2)
+
+    c3 = res_block(p2, 128)
+    p3 = MaxPooling2D((2, 2))(c3)
+
+    c4 = res_block(p3, 256)
+
+    # Decoder
+    u5 = Conv2DTranspose(128, (2, 2), strides=(2, 2), padding='same')(c4)
+    u5 = concatenate([u5, c3])
+    u5 = res_block(u5, 128)
+
+    u6 = Conv2DTranspose(64, (2, 2), strides=(2, 2), padding='same')(u5)
+    u6 = concatenate([u6, c2])
+    u6 = res_block(u6, 64)
+
+    u7 = Conv2DTranspose(32, (2, 2), strides=(2, 2), padding='same')(u6)
+    u7 = concatenate([u7, c1])
+    u7 = res_block(u7, 32)
+
+    outputs = Conv2D(1, (1, 1), activation='sigmoid')(u7)
+
+    model = Model(inputs=[inputs], outputs=[outputs])
+    return model

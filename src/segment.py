@@ -2,29 +2,22 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
-from load_data import load_images, IMAGE_SIZE
+import cv2
+from sklearn.cluster import KMeans
+from load_data import load_images, IMAGE_SIZE, NUM_CLASSES, NUM_BATCHSIZE, IMG_HEIGHT, IMG_WIDTH
 
-#circ shit
-#from remove_circles import remove_circles
+# Maybe try these two lines below to save memory
+#from tensorflow.keras import mixed_precision
+#mixed_precision.set_global_policy("mixed_float16")
+
+# Testar detta för att undvika krasch
+tf.keras.backend.clear_session()
 
 # Paths
 USED_MODEL = "attention_resunet"
-#MODEL_PATH = "models/resunet_model.h5"
-#MODEL_PATH = "models/unet_model.h5"
-#MODEL_PATH = "models/fpn_model.h5"
-#MODEL_PATH = "models/attention_unet_model.h5"
-#MODEL_PATH = "models/attention_resunet_model.h5"
 MODEL_PATH = "models/" + USED_MODEL + "_model.h5"
-
-#TEST_IMAGE_DIR = "data/raw"
-#TEST_IMAGE_DIR = "data/Excel cells"
 TEST_IMAGE_DIR = "images/r01_/rec_16bit_Paganin_0"
-
 OUTPUT_DIR = "output/" + USED_MODEL + "/"
-
-# Load trained model
-if not os.path.exists(MODEL_PATH):
-    raise FileNotFoundError(f"Model file not found: {MODEL_PATH}")
 
 # Register custom loss function before loading
 def dice_loss(y_true, y_pred):
@@ -41,32 +34,30 @@ def focal_loss(y_true, y_pred, gamma=2.0, alpha=0.25):
     loss = -tf.keras.backend.mean(alpha * tf.keras.backend.pow(1 - pt, gamma) * tf.keras.backend.log(pt))
     return loss
 
-# Load model with correct loss function
-model = tf.keras.models.load_model(MODEL_PATH, custom_objects={"focal_loss": focal_loss})
+def contrastive_loss(y_true, y_pred):
+    """
+    Unsupervised loss that encourages distinct feature maps in the segmentation.
+    - Uses pixel-wise contrastive clustering.
+    """
+    epsilon = 1e-6
+    feature_mean = tf.reduce_mean(y_pred, axis=[1, 2], keepdims=True)
+    contrastive_term = tf.reduce_mean(tf.square(y_pred - feature_mean))  # Encourages cluster separation
+    return contrastive_term
 
-print(f"Loaded model from {MODEL_PATH}")
+def cluster_segmentation(predictions, num_classes=NUM_CLASSES):
+    """Uses OpenCV's highly optimized k-means implementation."""
+    clustered_masks = []
 
-# Load test images
-#test_images, _ = load_images(TEST_IMAGE_DIR, color_mode="rgb")  # Ignore masks
-test_images, _ = load_images(TEST_IMAGE_DIR, color_mode="grayscale")
+    for feature_map in predictions:
+        feature_flat = feature_map.reshape(-1, feature_map.shape[-1]).astype(np.float32)  # Convert to float32 for OpenCV
+        _, labels, _ = cv2.kmeans(feature_flat, num_classes, None,
+                                  criteria=(cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0),
+                                  attempts=1, flags=cv2.KMEANS_RANDOM_CENTERS)
+        clustered_img = labels.reshape(feature_map.shape[:2])
+        clustered_masks.append(clustered_img)
 
-#circ sh
-#test_images = np.array([remove_circles(img) for img in test_images])
+    return np.array(clustered_masks)
 
-# Run predictions
-print("Running predictions...")
-predictions = model.predict(test_images)
-
-# Ensure output is in correct range
-#predictions = np.clip(predictions, 0, 1)
-# Convert predictions to binary mask (Thresholding)
-#threshold = 0.2 
-#predictions = (predictions > threshold).astype(np.float32)
-predictions = np.clip(predictions, 0, 1)  # Keeps grayscale range
-
-
-# Create output folder
-os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # Visualize & Save results
 def visualize_results(original, predicted, save_path=OUTPUT_DIR):
@@ -75,13 +66,11 @@ def visualize_results(original, predicted, save_path=OUTPUT_DIR):
         fig, axes = plt.subplots(1, 2, figsize=(8, 4))
 
         # Original Image
-        #axes[0].imshow(original[i])
         axes[0].imshow(original[i].squeeze(), cmap="gray", vmin=0, vmax=1)
         axes[0].set_title("Original Image")
         axes[0].axis("off")
 
         # Predicted Segmentation
-        #axes[1].imshow(predicted[i])
         axes[1].imshow(predicted[i].squeeze(), cmap="gray", vmin=0, vmax=1)
         axes[1].set_title("Predicted Segmentation")
         axes[1].axis("off")
@@ -95,5 +84,37 @@ def visualize_results(original, predicted, save_path=OUTPUT_DIR):
         if j == 10:
             break
 
-visualize_results(test_images, predictions)
+# Load trained model
+if not os.path.exists(MODEL_PATH):
+    raise FileNotFoundError(f"Model file not found: {MODEL_PATH}")
+
+# Load model with correct loss function
+model = tf.keras.models.load_model(MODEL_PATH, custom_objects={"focal_loss": focal_loss, "contrastive_loss": contrastive_loss})
+
+print(f"Loaded model from {MODEL_PATH}")
+
+# Load test images
+test_images = load_images(TEST_IMAGE_DIR)
+
+split = int(0.1 * len(list(test_images.as_numpy_iterator())))  # Calculate split index
+original_images = test_images.take(split)   
+
+original_images_list = []
+for image, _ in original_images:
+    grayscale_image = tf.reduce_mean(image, axis=-1, keepdims=True)  # Average across the channels
+    original_images_list.append(grayscale_image.numpy())  # Extract image tensor and convert to numpy array
+
+# Convert list to numpy array and reshape to match model input
+original_images_array = np.array(original_images_list)
+original_images_array = original_images_array.reshape((-1, IMG_HEIGHT, IMG_WIDTH, 1))
+
+# Run predictions
+print("Running predictions...")
+predictions = model.predict(original_images_array, batch_size=NUM_BATCHSIZE)
+predictions = np.clip(predictions, 0, 1)  # Keeps grayscale range
+
+# Create output folder
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+visualize_results(original_images_array, predictions)
 print("Segmentation results saved in 'output/" + USED_MODEL + "/' folder.")
