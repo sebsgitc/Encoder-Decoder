@@ -1,0 +1,64 @@
+.DS_Store
+venv/
+__pycache__/
+.vscode/
+*.so
+*.dll
+*.bin
+*.dylib
+*.pyc
+*.so*
+*.tif
+*.png
+*.dat
+*.tar.gz
+*.zip
+*nii.gz
+
+# Logs directory
+logs/
+
+# Additional binary and data files
+*.pt
+*.pth
+*.hdf5
+*.pkl
+*.npy
+*.npz
+*.csv
+!seed_points/r01_seed_points.csv
+!seed_points/r04_seed_points.csv
+!seed_points/r33_seed_points.csv
+!seed_points/r34_seed_points.csv
+!seed_points/rL1_seed_points.csv
+!seed_points/rL4_seed_points.csv
+*.json
+*.log
+*.out
+*.err
+*.keras
+
+# Large model files
+# First exclude all h5 files everywhere
+*.h5
+
+# Then specifically include just the directory and files you want
+#!checkpoints/model_250403_five_epochs_five_volumes/
+#!checkpoints/model_250403_five_epochs_five_volumes/*.h5
+
+# For models directory, exclude everything with these extensions
+models/*.pt
+models/*.pth
+models/*.ckpt
+checkpoint/
+semi_supervised/
+
+# Virtual environment
+.venv/
+env/
+ENV/
+
+# Python distutils
+dist/
+build/
+*.egg-info/

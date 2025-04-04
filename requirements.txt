@@ -1,0 +1,15 @@
+tensorflow[and-cuda]
+numpy
+scipy
+pandas
+imageio
+matplotlib
+scikit-image
+scikit-learn
+opencv-python
+tensorflow_io
+tensorflow_addons
+torch
+simpleitk
+tqdm
+tifffile

@@ -1,0 +1,24 @@
+Algorithm                  1
+Branch                     master
+Postfix                    0
+Center                     1281.76
+Filter                     4
+Cutoff frequency           0.5
+Rotation                   0
+Padding                    0.5
+Geometry                   1
+Ring option                0
+Zinger option              False
+Output format              16
+Minimum                    5.018e-07
+Maximum                    6.930e-06
+X1                         0
+X2                         0
+Y1                         0
+Y2                         0
+Shifting                   0
+Delta                      3.7e-8
+Beta                       1.7e-10
+Distance                   190
+FFT Paganin padding        0
+
