@@ -13,3 +13,4 @@ torch
 simpleitk
 tqdm
 tifffile
+nibabel
