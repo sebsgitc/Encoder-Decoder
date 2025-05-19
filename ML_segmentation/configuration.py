@@ -69,7 +69,7 @@ USE_ALL_SLICES = True  # Use all Z-axis slices
 
 # Define the sampling sizes for each axis (not used since we're only using Z-axis)
 MULTI_AXIS_SAMPLE_SIZE = {
-    'Z': 10000,  # Very large number to ensure all Z slices are used
+    'Z': 10240,  # Very large number to ensure all Z slices are used
     'Y': 0,      # No Y slices
     'X': 0       # No X slices
 }

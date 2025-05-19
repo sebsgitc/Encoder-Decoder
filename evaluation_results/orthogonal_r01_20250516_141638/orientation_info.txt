@@ -1,0 +1,6 @@
+Orientation Information
+=====================
+
+Output data dimensions: (1024, 1024, 1024)
+
+Volume saved as TIFF stack

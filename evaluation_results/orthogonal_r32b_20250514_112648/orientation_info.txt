@@ -1,0 +1,11 @@
+Orientation Information
+=====================
+
+Original data dimensions: (1024, 1024, 1024)
+Output data dimensions: (1024, 1024, 1024)
+
+Axis convention used:
+- Original: [Z, Y, X] (Python/NumPy convention)
+- Output: [X, Y, Z] (Fiji convention)
+
+The output files have been transposed to match Fiji's expected orientation.
