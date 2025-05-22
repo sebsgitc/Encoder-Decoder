@@ -14,3 +14,4 @@ simpleitk
 tqdm
 tifffile
 nibabel
+seaborn

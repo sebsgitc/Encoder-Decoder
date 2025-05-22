@@ -1,0 +1,448 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Segmentation Evaluation Report</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 20px; }
+            table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            tr:nth-child(even) { background-color: #f9f9f9; }
+            .header { background-color: #4CAF50; color: white; padding: 10px; margin-bottom: 20px; }
+            .section { margin-bottom: 30px; }
+            .metric-highlight { font-weight: bold; color: #2196F3; }
+            img { max-width: 100%; margin: 10px 0; }
+            .comparison-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+            .metric-card { border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 20px; }
+            .metric-card h4 { margin-top: 0; color: #333; }
+            .dataset-nav { position: sticky; top: 0; background-color: white; padding: 10px; border-bottom: 1px solid #ddd; z-index: 100; }
+            .dataset-nav a { margin-right: 15px; text-decoration: none; color: #2196F3; }
+            .dataset-nav a:hover { text-decoration: underline; }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Segmentation Evaluation Report</h1>
+            <p>Comparison between FMM and ML segmentation methods</p>
+            <p>Generated on: 2025-05-21 17:57:21</p>
+        </div>
+        
+        <div class="dataset-nav">
+            <a href="#summary">Summary</a>
+            <a href="#r01_">r01_</a> <a href="#r33_">r33_</a> <a href="#r34_">r34_</a> <a href="#rL1_">rL1_</a> <a href="#rL4_">rL4_</a>
+        </div>
+        
+        <div id="summary" class="section">
+            <h2>Summary</h2>
+            <p>Total datasets evaluated: 5</p>
+            
+            <h3>Combined Metrics (All Volumes)</h3>
+    
+            <table>
+                <tr>
+                    <th>Metric</th><th>Value</th>
+                </tr>
+                <tr>
+                    <td>Accuracy</td><td class="metric-highlight">0.9830</td>
+                </tr>
+                <tr>
+                    <td>Precision</td><td class="metric-highlight">0.4421</td>
+                </tr>
+                <tr>
+                    <td>Recall (Sensitivity)</td><td class="metric-highlight">0.7074</td>
+                </tr>
+                <tr>
+                    <td>F1 Score</td><td class="metric-highlight">0.5441</td>
+                </tr>
+                <tr>
+                    <td>IoU (Jaccard Index)</td><td class="metric-highlight">0.3737</td>
+                </tr>
+                <tr>
+                    <td>Specificity</td><td class="metric-highlight">0.9870</td>
+                </tr>
+                <tr>
+                    <td>NPV</td><td class="metric-highlight">0.9957</td>
+                </tr>
+            </table>
+            
+            <div class="metric-card">
+                <h4>Confusion Matrix</h4>
+                <img src="combined_confusion_matrix.png" alt="Combined Confusion Matrix">
+                <img src="combined_confusion_matrix_normalized.png" alt="Normalized Combined Confusion Matrix">
+            </div>
+        
+            <h3>Average Metrics</h3>
+            <table>
+                <tr>
+                    <th>Metric</th><th>Value</th>
+                </tr>
+                <tr>
+                    <td>Accuracy</td><td class="metric-highlight">0.9830</td>
+                </tr>
+                <tr>
+                    <td>Precision</td><td class="metric-highlight">0.4390</td>
+                </tr>
+                <tr>
+                    <td>Recall (Sensitivity)</td><td class="metric-highlight">0.7205</td>
+                </tr>
+                <tr>
+                    <td>F1 Score</td><td class="metric-highlight">0.5345</td>
+                </tr>
+                <tr>
+                    <td>IoU (Jaccard Index)</td><td class="metric-highlight">0.3691</td>
+                </tr>
+                <tr>
+                    <td>Specificity</td><td class="metric-highlight">0.9870</td>
+                </tr>
+                <tr>
+                    <td>NPV</td><td class="metric-highlight">0.9957</td>
+                </tr>
+            </table>
+            
+            <div class="metric-card">
+                <h4>Metrics Comparison Across Datasets</h4>
+                <img src="metrics_comparison.png" alt="Metrics Comparison">
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Dataset Details</h2>
+    
+            <div id="r01_" class="section">
+                <h3>Dataset: r01_</h3>
+                <table>
+                    <tr>
+                        <th>Metric</th><th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Accuracy</td><td>0.9834</td>
+                    </tr>
+                    <tr>
+                        <td>Precision</td><td>0.2966</td>
+                    </tr>
+                    <tr>
+                        <td>Recall (Sensitivity)</td><td>0.8158</td>
+                    </tr>
+                    <tr>
+                        <td>F1 Score</td><td>0.4351</td>
+                    </tr>
+                    <tr>
+                        <td>IoU (Jaccard Index)</td><td>0.2780</td>
+                    </tr>
+                    <tr>
+                        <td>Specificity</td><td>0.9847</td>
+                    </tr>
+                    <tr>
+                        <td>NPV</td><td>0.9985</td>
+                    </tr>
+                </table>
+                
+                <div class="comparison-grid">
+                    <div class="metric-card">
+                        <h4>Pixel Counts</h4>
+                        <table>
+                            <tr>
+                                <th>Metric</th><th>Count</th>
+                            </tr>
+                            <tr>
+                                <td>True Positives</td><td>6,860,751</td>
+                            </tr>
+                            <tr>
+                                <td>False Positives</td><td>16,268,831</td>
+                            </tr>
+                            <tr>
+                                <td>True Negatives</td><td>1,049,063,650</td>
+                            </tr>
+                            <tr>
+                                <td>False Negatives</td><td>1,548,592</td>
+                            </tr>
+                        </table>
+                    </div>
+                
+                    <div class="metric-card">
+                        <h4>Confusion Matrix</h4>
+                        <img src="r01_confusion_matrix.png" alt="Confusion Matrix">
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <h4>Visual Comparison</h4>
+                    <img src="r01_comparison.png" alt="Visual Comparison">
+                    <p><strong>Color Legend:</strong> White = Both agree | Red = FMM only | Blue = ML only</p>
+                </div>
+            </div>
+        
+            <div id="r33_" class="section">
+                <h3>Dataset: r33_</h3>
+                <table>
+                    <tr>
+                        <th>Metric</th><th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Accuracy</td><td>0.9808</td>
+                    </tr>
+                    <tr>
+                        <td>Precision</td><td>0.3453</td>
+                    </tr>
+                    <tr>
+                        <td>Recall (Sensitivity)</td><td>0.7131</td>
+                    </tr>
+                    <tr>
+                        <td>F1 Score</td><td>0.4653</td>
+                    </tr>
+                    <tr>
+                        <td>IoU (Jaccard Index)</td><td>0.3032</td>
+                    </tr>
+                    <tr>
+                        <td>Specificity</td><td>0.9840</td>
+                    </tr>
+                    <tr>
+                        <td>NPV</td><td>0.9966</td>
+                    </tr>
+                </table>
+                
+                <div class="comparison-grid">
+                    <div class="metric-card">
+                        <h4>Pixel Counts</h4>
+                        <table>
+                            <tr>
+                                <th>Metric</th><th>Count</th>
+                            </tr>
+                            <tr>
+                                <td>True Positives</td><td>8,978,084</td>
+                            </tr>
+                            <tr>
+                                <td>False Positives</td><td>17,025,077</td>
+                            </tr>
+                            <tr>
+                                <td>True Negatives</td><td>1,044,127,156</td>
+                            </tr>
+                            <tr>
+                                <td>False Negatives</td><td>3,611,507</td>
+                            </tr>
+                        </table>
+                    </div>
+                
+                    <div class="metric-card">
+                        <h4>Confusion Matrix</h4>
+                        <img src="r33_confusion_matrix.png" alt="Confusion Matrix">
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <h4>Visual Comparison</h4>
+                    <img src="r33_comparison.png" alt="Visual Comparison">
+                    <p><strong>Color Legend:</strong> White = Both agree | Red = FMM only | Blue = ML only</p>
+                </div>
+            </div>
+        
+            <div id="r34_" class="section">
+                <h3>Dataset: r34_</h3>
+                <table>
+                    <tr>
+                        <th>Metric</th><th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Accuracy</td><td>0.9854</td>
+                    </tr>
+                    <tr>
+                        <td>Precision</td><td>0.4938</td>
+                    </tr>
+                    <tr>
+                        <td>Recall (Sensitivity)</td><td>0.7105</td>
+                    </tr>
+                    <tr>
+                        <td>F1 Score</td><td>0.5826</td>
+                    </tr>
+                    <tr>
+                        <td>IoU (Jaccard Index)</td><td>0.4111</td>
+                    </tr>
+                    <tr>
+                        <td>Specificity</td><td>0.9894</td>
+                    </tr>
+                    <tr>
+                        <td>NPV</td><td>0.9958</td>
+                    </tr>
+                </table>
+                
+                <div class="comparison-grid">
+                    <div class="metric-card">
+                        <h4>Pixel Counts</h4>
+                        <table>
+                            <tr>
+                                <th>Metric</th><th>Count</th>
+                            </tr>
+                            <tr>
+                                <td>True Positives</td><td>10,921,810</td>
+                            </tr>
+                            <tr>
+                                <td>False Positives</td><td>11,196,944</td>
+                            </tr>
+                            <tr>
+                                <td>True Negatives</td><td>1,047,173,184</td>
+                            </tr>
+                            <tr>
+                                <td>False Negatives</td><td>4,449,886</td>
+                            </tr>
+                        </table>
+                    </div>
+                
+                    <div class="metric-card">
+                        <h4>Confusion Matrix</h4>
+                        <img src="r34_confusion_matrix.png" alt="Confusion Matrix">
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <h4>Visual Comparison</h4>
+                    <img src="r34_comparison.png" alt="Visual Comparison">
+                    <p><strong>Color Legend:</strong> White = Both agree | Red = FMM only | Blue = ML only</p>
+                </div>
+            </div>
+        
+            <div id="rL1_" class="section">
+                <h3>Dataset: rL1_</h3>
+                <table>
+                    <tr>
+                        <th>Metric</th><th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Accuracy</td><td>0.9808</td>
+                    </tr>
+                    <tr>
+                        <td>Precision</td><td>0.4922</td>
+                    </tr>
+                    <tr>
+                        <td>Recall (Sensitivity)</td><td>0.5689</td>
+                    </tr>
+                    <tr>
+                        <td>F1 Score</td><td>0.5278</td>
+                    </tr>
+                    <tr>
+                        <td>IoU (Jaccard Index)</td><td>0.3585</td>
+                    </tr>
+                    <tr>
+                        <td>Specificity</td><td>0.9887</td>
+                    </tr>
+                    <tr>
+                        <td>NPV</td><td>0.9917</td>
+                    </tr>
+                </table>
+                
+                <div class="comparison-grid">
+                    <div class="metric-card">
+                        <h4>Pixel Counts</h4>
+                        <table>
+                            <tr>
+                                <th>Metric</th><th>Count</th>
+                            </tr>
+                            <tr>
+                                <td>True Positives</td><td>11,492,004</td>
+                            </tr>
+                            <tr>
+                                <td>False Positives</td><td>11,856,880</td>
+                            </tr>
+                            <tr>
+                                <td>True Negatives</td><td>1,041,685,589</td>
+                            </tr>
+                            <tr>
+                                <td>False Negatives</td><td>8,707,351</td>
+                            </tr>
+                        </table>
+                    </div>
+                
+                    <div class="metric-card">
+                        <h4>Confusion Matrix</h4>
+                        <img src="rL1_confusion_matrix.png" alt="Confusion Matrix">
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <h4>Visual Comparison</h4>
+                    <img src="rL1_comparison.png" alt="Visual Comparison">
+                    <p><strong>Color Legend:</strong> White = Both agree | Red = FMM only | Blue = ML only</p>
+                </div>
+            </div>
+        
+            <div id="rL4_" class="section">
+                <h3>Dataset: rL4_</h3>
+                <table>
+                    <tr>
+                        <th>Metric</th><th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Accuracy</td><td>0.9846</td>
+                    </tr>
+                    <tr>
+                        <td>Precision</td><td>0.5673</td>
+                    </tr>
+                    <tr>
+                        <td>Recall (Sensitivity)</td><td>0.7941</td>
+                    </tr>
+                    <tr>
+                        <td>F1 Score</td><td>0.6618</td>
+                    </tr>
+                    <tr>
+                        <td>IoU (Jaccard Index)</td><td>0.4945</td>
+                    </tr>
+                    <tr>
+                        <td>Specificity</td><td>0.9883</td>
+                    </tr>
+                    <tr>
+                        <td>NPV</td><td>0.9960</td>
+                    </tr>
+                </table>
+                
+                <div class="comparison-grid">
+                    <div class="metric-card">
+                        <h4>Pixel Counts</h4>
+                        <table>
+                            <tr>
+                                <th>Metric</th><th>Count</th>
+                            </tr>
+                            <tr>
+                                <td>True Positives</td><td>16,161,057</td>
+                            </tr>
+                            <tr>
+                                <td>False Positives</td><td>12,328,534</td>
+                            </tr>
+                            <tr>
+                                <td>True Negatives</td><td>1,041,062,060</td>
+                            </tr>
+                            <tr>
+                                <td>False Negatives</td><td>4,190,173</td>
+                            </tr>
+                        </table>
+                    </div>
+                
+                    <div class="metric-card">
+                        <h4>Confusion Matrix</h4>
+                        <img src="rL4_confusion_matrix.png" alt="Confusion Matrix">
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <h4>Visual Comparison</h4>
+                    <img src="rL4_comparison.png" alt="Visual Comparison">
+                    <p><strong>Color Legend:</strong> White = Both agree | Red = FMM only | Blue = ML only</p>
+                </div>
+            </div>
+        
+        </div>
+        
+        <script>
+            // Add smooth scrolling for navigation links
+            document.querySelectorAll('.dataset-nav a').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        </script>
+    </body>
+    </html>
+    
