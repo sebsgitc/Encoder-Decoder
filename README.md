@@ -1,5 +1,5 @@
 # Encoder-Decoder and Fast Marching for segmentation of blood vessels in lung tissue
-This repository contains the code for the Master's Thesis *Title* written by *Adam Svedberg* and *Sebastian Petersson* at the Division of Mathematical Statistics at the Faculty of Engineering at Lund University. 
+This repository contains the code for the Master's Thesis *Title* written by **Adam Svedberg** and **Sebastian Petersson** at the Division of Mathematical Statistics at the Faculty of Engineering at Lund University. The code is used to create masks for blood vessels via seed points and *Constrained-FMM* and then a final segmentation using an *Attention ResU-net*. Pre-trained weights for the ML model, images and other information can be found at **Länk till digital appendix**
 
 ## General information about the code and it's operations.
 
@@ -23,9 +23,9 @@ This project was developed and tested on the following hardware configuration:
 - **GPUs**: 2× Nvidia Tesla V100-PCIE-16GB
 - **CPU**: Intel(R) Xeon(R) W-2125 CPU @ 4.00GHz
 - **RAM**: 125 GB 
-- **Storage**: At least 500 GB recommended for dataset storage
+- **Storage**: At least 600 GB recommended for dataset storage
 - **CUDA Version**: 12.2 
-- **OS**: Ubuntu 20.04 (or your specific OS from `/etc/os-release`)
+- **OS**: Linux Mint 21.2
 
 ### Software Dependencies
 - Python        3.10.12
@@ -77,7 +77,7 @@ Encoder-Decoder/
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/yourusername/Encoder-Decoder.git
+git clone https://github.com/sebsgitc/Encoder-Decoder.git
 cd Encoder-Decoder
 ```
 
@@ -133,7 +133,7 @@ If you use this code in your research, please cite our thesis:
 
 ## License
 
-This project is licensed under the [appropriate license] - see the LICENSE file for details.
+This project is licensed under the MIT license.
 
 ## Contact
 
