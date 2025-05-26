@@ -46,6 +46,8 @@ logs/
 # Then specifically include just the directory and files you want
 !checkpoints/model_250403_five_epochs_five_volumes/
 !checkpoints/model_250403_five_epochs_five_volumes/*.h5
+!checkpoints/model_250519_fifteen_epochs_five_volumes
+!checkpoints/model_250519_fifteen_epochs_five_volumes/*.h5
 
 # For models directory, exclude everything with these extensions
 models/*.pt
