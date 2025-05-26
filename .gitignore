@@ -51,7 +51,6 @@ logs/
 models/*.pt
 models/*.pth
 models/*.ckpt
-checkpoint/
 semi_supervised/
 
 # Virtual environment
