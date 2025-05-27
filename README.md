@@ -1,5 +1,5 @@
 # Encoder-Decoder and Fast Marching for segmentation of blood vessels in lung tissue
-This repository contains the code for the Master's Thesis *Title* written by **Adam Svedberg** and **Sebastian Petersson** at the Division of Mathematical Statistics at the Faculty of Engineering at Lund University. The code is used to create masks for blood vessels via seed points and *Constrained-FMM* and then a final segmentation using an *Attention ResU-net*. Pre-trained weights for the ML model, images and other information can be found at **Länk till digital appendix**
+This repository contains the code for the Master's Thesis *Semi-supervised segmentation of blood vessels in synchrotron $\mu\text{m-CT}$ scans* written by **Adam Svedberg** and **Sebastian Petersson** at the Division of Mathematical Statistics at the Faculty of Engineering at Lund University. The code is used to create masks for blood vessels via seed points and *Constrained-FMM* and then a final segmentation using an *Attention ResU-net*. Pre-trained weights for the ML model, images and other information can be found [here](https://drive.google.com/drive/folders/1R0lQdSKNx96qXUxH2xhvGxUfSIvxlVTM?usp=sharing).
 
 ## General information about the code and it's operations.
 
