@@ -124,7 +124,7 @@ If you use this code in your research, please cite our thesis:
 ```
 @mastersthesis{svedberg2025segmentation,
   author       = {Svedberg, Adam and Petersson, Sebastian},
-  title        = {Title},
+  title        = {Semi-supervised segmentation of blood vessels in synchrotron μm-CT scans},
   school       = {Lund University},
   year         = {2025},
   month        = {June}
